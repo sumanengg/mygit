@@ -50,9 +50,35 @@ def get_tree (oid, base_path=''):
             assert False, f'Unknown tree entry {type_}'
     return result
 
+''' Deleting the current directory in reading to get the all from tree-read 
+ again for that Version. '''
+
+def _empty_current_directory():
+    for path, dirs, filenames in os.walkZ(".", topdown=False):
+        for filename in filenames:
+            filepath = os.path.relpath(f'{path}/{filename}')
+            if is_ignored(filepath) or not os.path.isfile(filepath):
+                continue
+            os.remove(filepath)
+        for dir in dirs:
+            dirpath = os.path.relpath(f'{path}/{dir}')
+            if is_ignored(dirpath):
+                continue
+            try:
+                os.rmdir(dirpath)
+            except (FileNotFoundError, OSError):
+                pass
 
 def read_tree (tree_oid):
+    _empty_current_directory()
     for path, oid in get_tree (tree_oid, base_path='./').items ():
         os.makedirs (os.path.dirname (path), exist_ok=True)
         with open (path, 'wb') as f:
             f.write (data.get_object (oid))
+
+# function to ignore file:
+
+def is_ignored(path):
+    if ".mygit" in path.split("/"):
+        return True
+    return False
