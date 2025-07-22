@@ -15,6 +15,16 @@ def main():
     cat_file_parcer.add_argument("oid")
     cat_file_parcer.set_defaults(func=cat_file)
 
+    # write-tree command
+    write_tree_parcer = commands.add_parser("write-tree")
+    write_tree_parcer.set_defaults(func=write_tree)
+
+    # read-tree command
+    read_tree_parser = commands.add_parser ('read-tree')
+    read_tree_parser.set_defaults (func=read_tree)
+    read_tree_parser.add_argument ('tree')
+
+
     args = parser.parse_args()
 
     if hasattr(args, "func"):
@@ -44,5 +54,16 @@ def cat_file(args):
     except Exception as e:
         raise
 
+def write_tree(args):
+    try:
+        print(base.write_tree())
+    except Exception as e:
+        raise
+
+def read_tree (args):
+    try:
+        base.read_tree (args.tree)
+    except Exception as e:
+        raise
 if __name__ == "__main__":
     main()
