@@ -22,11 +22,14 @@ def hash_object(data, obj_type="blob"):
         raise
 
 # get_object now returns (type, data)
-def get_object(oid):
+def get_object(oid, type="blob"):
     try:
         with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
             full_data = f.read()
         obj_type, _, data = full_data.partition(b'\0')
+        type_ = obj_type.decode()
+        if type is not None:
+            assert type_ == type, f'Expected {expected}, got {type_}'
         return data
     except Exception as e:
         raise

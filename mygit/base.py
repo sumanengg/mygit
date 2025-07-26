@@ -54,7 +54,7 @@ def get_tree (oid, base_path=''):
  again for that Version. '''
 
 def _empty_current_directory():
-    for path, dirs, filenames in os.walkZ(".", topdown=False):
+    for path, dirs, filenames in os.walk(".", topdown=False):
         for filename in filenames:
             filepath = os.path.relpath(f'{path}/{filename}')
             if is_ignored(filepath) or not os.path.isfile(filepath):
@@ -79,6 +79,6 @@ def read_tree (tree_oid):
 # function to ignore file:
 
 def is_ignored(path):
-    if ".mygit" in path.split("/"):
+    if ".mygit" or ".git" in path.split("/"):
         return True
     return False
