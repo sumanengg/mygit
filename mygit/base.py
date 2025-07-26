@@ -79,6 +79,27 @@ def read_tree (tree_oid):
 # function to ignore file:
 
 def is_ignored(path):
-    if ".mygit" or ".git" in path.split("/"):
+    # Normalize path separators to handle both Windows and Unix paths
+    path = path.replace('\\', '/')
+    parts = path.split('/')
+
+    #Files to ignore
+    ignore_files = [
+        '.git',
+        '.mygit',
+        '.gitignore',
+        '__pycache__',
+        '*.egg-info'
+    ]
+    # Check if any part of the path should be ignored
+    if any(part in ['.git', '.mygit'] for part in parts):
         return True
+    
+    if parts[-1] in ['.gitignore']:
+        return True
+    
+    # Also ignore the entire .git and .mygit directories and their contents
+    if '.git/' in path or '.mygit/' in path:
+        return True
+        
     return False

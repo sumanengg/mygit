@@ -29,7 +29,7 @@ def get_object(oid, type="blob"):
         obj_type, _, data = full_data.partition(b'\0')
         type_ = obj_type.decode()
         if type is not None:
-            assert type_ == type, f'Expected {expected}, got {type_}'
+            assert type_ == type, f'Expected {type}, got {type_}'
         return data
     except Exception as e:
         raise
