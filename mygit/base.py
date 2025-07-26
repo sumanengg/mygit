@@ -92,7 +92,7 @@ def is_ignored(path):
         '*.egg-info'
     ]
     # Check if any part of the path should be ignored
-    if any(part in ['.git', '.mygit'] for part in parts):
+    if any(part in ignore_files for part in parts):
         return True
     
     if parts[-1] in ['.gitignore']:
