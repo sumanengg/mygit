@@ -22,14 +22,16 @@ def hash_object(data, obj_type="blob"):
         raise
 
 # get_object now returns (type, data)
-def get_object(oid, type="blob"):
+def get_object(oid):
     try:
         with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
             full_data = f.read()
         obj_type, _, data = full_data.partition(b'\0')
-        type_ = obj_type.decode()
-        if type is not None:
-            assert type_ == type, f'Expected {type}, got {type_}'
         return data
     except Exception as e:
         raise
+
+# Set last commit hash as HEAD
+def set_HEAD(oid):
+    with open(f"{GIT_DIR}/HEAD", 'w') as f:
+        f.write(oid)

@@ -76,6 +76,25 @@ def read_tree (tree_oid):
         with open (path, 'wb') as f:
             f.write (data.get_object (oid))
 
+# Create the main commit message function 
+
+def commit(message):
+    '''
+    Take message as argument. Create the HASH object of that.
+    Save it as HEAD into HEAD file.
+    Return:
+        The oid of the commit message.
+    '''
+    commit = f'tree {write_tree()}\n'
+    commit += '\n'
+    commit += f'{message}\n'
+    oid = data.hash_object(commit.encode(), 'commit')
+    data.set_HEAD(oid=oid)
+
+
+    return oid
+
+
 # function to ignore file:
 
 def is_ignored(path):

@@ -24,6 +24,13 @@ def main():
     read_tree_parser.set_defaults (func=read_tree)
     read_tree_parser.add_argument ('tree')
 
+    # Creating the commit
+    commit_parser = commands.add_parser('commit')
+    commit_parser.set_defaults(func=commit)
+    commit_parser.add_argument("-m", "--message", required=True)
+
+
+
 
     args = parser.parse_args()
 
@@ -65,5 +72,12 @@ def read_tree (args):
         base.read_tree (args.tree)
     except Exception as e:
         raise
+
+def commit(args):
+    try:
+        print(base.commit(args.message))
+    except Exception as e:
+        raise
+
 if __name__ == "__main__":
     main()
