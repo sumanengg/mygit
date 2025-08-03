@@ -3,6 +3,7 @@ from . import data, base
 import os, sys, textwrap
 
 def main():
+    """Parse command line arguments and dispatch to appropriate function."""
     parser = argparse.ArgumentParser()
     commands = parser.add_subparsers()
     init_parser = commands.add_parser("init")
@@ -44,12 +45,14 @@ def main():
         parser.print_help()
 
 def init(args):
+    """Initialize a new mygit repository in the current directory."""
     data.init()
     print (f'Initialized empty ugit repository in {os.getcwd()}/{data.GIT_DIR}')
 
 # Hash_function to take file as argument and stroed it as content-addressble
 
 def hash_function(args):
+    """Store a file in the object database."""
     try:
         with open(args.file, 'rb') as f:
             data.hash_object(f.read())
@@ -66,6 +69,7 @@ def cat_file(args):
         raise
 
 def write_tree(args):
+    """Create a tree object from the current directory state."""
     try:
         print(base.write_tree())
     except Exception as e:

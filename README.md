@@ -1,47 +1,66 @@
 # mygit
 
-A minimal version control CLI tool inspired by Git, written in Python.
+A minimal version control system implementation inspired by Git, written in Python. This project demonstrates the internal workings of Git-like version control systems.
 
 ## Features
 
-- `init` command: Initializes a new repository in `.mygit`.
-- `hash-object <file>`: Stores a file as a content-addressed blob object.
-- `cat-file <oid>`: Prints the content of an object by its OID.
-- `write-tree`: Creates a tree object representing the current directory structure and prints its OID.
-- `read-tree <tree_oid>`: Restores the directory structure and files from a tree object.
+### Basic Operations
+- `init`: Initializes a new repository in `.mygit`
+- `hash-object <file>`: Stores a file as a content-addressed blob object
+- `cat-file <oid>`: Prints the content of an object by its OID
+
+### Tree Operations
+- `write-tree`: Creates a tree object representing the current directory structure
+- `read-tree <tree_oid>`: Restores the directory structure and files from a tree object
+
+### Version Control
+- `commit -m "<message>"`: Creates a commit with the current directory state
+- `mylog`: Shows commit history starting from HEAD
 
 ## Installation
 
-From the project root, install in editable mode:
 ```bash
+# Clone the repository
+git clone https://github.com/sumanengg/mygit.git
+cd mygit
+
+# Install in development mode
 pip install -e .
 ```
 
 ## Usage
 
-Initialize a repository:
+### Repository Setup
 ```bash
+# Initialize a new repository
 mygit init
 ```
 
-Store a file as a blob object:
+### Working with Objects
 ```bash
-mygit hash-object cats.txt
+# Store a file in the object database
+mygit hash-object myfile.txt
+
+# View object contents
+mygit cat-file <object_id>
 ```
 
-Print the content of an object:
+### Managing Directory State
 ```bash
-mygit cat-file <oid>
-```
-
-Create a tree object for the current directory:
-```bash
+# Create a tree object from current directory
 mygit write-tree
+
+# Restore directory state from a tree
+mygit read-tree <tree_id>
 ```
 
-Restore files and directories from a tree object:
+### Version Control
 ```bash
-mygit read-tree <tree_oid>
+# Create a commit
+mygit commit -m "Initial commit"
+
+# View commit history
+mygit mylog
 ```
 
 ## Project Structure
