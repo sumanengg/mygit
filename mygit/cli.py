@@ -1,6 +1,6 @@
 import argparse
 from . import data, base
-import os, sys
+import os, sys, textwrap
 
 def main():
     parser = argparse.ArgumentParser()
@@ -28,6 +28,10 @@ def main():
     commit_parser = commands.add_parser('commit')
     commit_parser.set_defaults(func=commit)
     commit_parser.add_argument("-m", "--message", required=True)
+
+    # Log 
+    log_parser = commands.add_parser('mylog')
+    log_parser.set_defaults(func=log)
 
 
 
@@ -78,6 +82,16 @@ def commit(args):
         print(base.commit(args.message))
     except Exception as e:
         raise
+
+def log(args):
+    oid = data.get_HEAD()
+    while oid:
+        commit = base.get_log(oid)
+        print(f"Commit {oid}\n")
+        print(textwrap.indent(commit.message, '    '))
+        print('')
+        oid = commit.parent
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 from . import data
 import os
+from collections import namedtuple
 
 # Create the main function for write-tree commands.
 
@@ -86,6 +87,9 @@ def commit(message):
         The oid of the commit message.
     '''
     commit = f'tree {write_tree()}\n'
+    HEAD = data.get_HEAD()
+    if HEAD:
+        commit += f"parent {HEAD}\n"
     commit += '\n'
     commit += f'{message}\n'
     oid = data.hash_object(commit.encode(), 'commit')
@@ -93,6 +97,33 @@ def commit(message):
 
 
     return oid
+
+LogEntry = namedtuple('LogEntry', ['tree', 'parent', 'message'])
+# Log Function to Get Log.
+def get_log(oid):
+    '''
+        It extracts the commit information from commit objects.
+        Returns: LogEntry tuple.
+    '''
+    commit_hash_data = data.get_object(oid)
+    lines = commit_hash_data.decode().splitlines()
+    parent = ''
+    tree = ''
+    message = []
+
+    while lines:
+        line = lines.pop(0)
+        if not line:
+            break
+        key, value = line.split(' ', 1)
+        if key == 'tree':
+            tree = value
+        elif key == 'parent':
+            parent = value
+        
+    message = '\n'.join(lines)
+
+    return LogEntry(tree=tree, parent=parent, message=message)
 
 
 # function to ignore file:
