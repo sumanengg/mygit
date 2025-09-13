@@ -19,13 +19,58 @@ A minimal version control system implementation inspired by Git, written in Pyth
 
 ## Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/sumanengg/mygit.git
-cd mygit
+### Prerequisites
+- Python 3.7+
+- pip (Python package installer)
 
-# Install in development mode
-pip install -e .
+### Development Environment Setup
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sumanengg/mygit.git
+   cd mygit
+   ```
+
+2. Create and activate a virtual environment:
+   ```bash
+   # Windows
+   python -m venv .venv
+   .venv\Scripts\activate
+
+   # Linux/macOS
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. Install dependencies and the package:
+   ```bash
+   pip install -r requirements.txt
+   pip install -e .
+   ```
+
+4. Verify the installation:
+   ```bash
+   pytest
+   ```
+
+### Development Tools
+
+This project uses several development tools:
+- `pytest` for testing
+- `black` for code formatting
+- `flake8` for linting
+- `mypy` for type checking
+
+To run the tools:
+```bash
+# Format code
+black .
+
+# Run linting
+flake8 .
+
+# Run type checking
+mypy .
 ```
 
 ## Usage
