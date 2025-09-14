@@ -1,6 +1,18 @@
-from . import data
+"""Base module for mygit implementing core version control operations.
+
+This module provides the fundamental version control operations including:
+- Tree operations (write_tree, read_tree)
+- Commit operations
+- Log retrieval
+- File ignore patterns
+
+It implements the core functionality needed for a basic version control system,
+similar to Git's internal object model and basic commands.
+"""
 import os
 from collections import namedtuple
+
+from . import data
 
 # Create the main function for write-tree commands.
 
@@ -40,8 +52,8 @@ def write_tree(directory="."):
 
 
 def _iter_tree_entries(oid):
-    """Internal function to iterate through entries in a tree object.
-
+    """
+    Internal function to iterate through entries in a tree object.
     Args:
         oid (str): Object ID of the tree
 

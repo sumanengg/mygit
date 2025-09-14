@@ -1,8 +1,10 @@
 import argparse
-from . import data, base
 import os
 import sys
 import textwrap
+
+from . import base
+from . import data
 
 
 def main():
