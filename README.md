@@ -56,10 +56,10 @@ A minimal version control system implementation inspired by Git, written in Pyth
 ### Development Tools
 
 This project uses several development tools:
-- `pytest` for testing
 - `black` for code formatting
 - `flake8` for linting
 - `mypy` for type checking
+- Pre-commit hooks for automated checks
 
 To run the tools:
 ```bash
@@ -71,7 +71,34 @@ flake8 .
 
 # Run type checking
 mypy .
+
+# Install pre-commit hooks
+pre-commit install
+
+# Run pre-commit hooks on all files
+pre-commit run --all-files
 ```
+
+### Testing
+
+The project uses Python's built-in unittest framework. You can run tests using any of these commands:
+
+```bash
+# Using unittest discover (recommended)
+python -m unittest discover -v
+
+# Using unittest with specific test file
+python -m unittest test.test_mygit -v
+
+# Using pytest (alternative test runner)
+pytest test/test_mygit.py -v
+```
+
+The test suite includes:
+- Repository initialization tests
+- Object hashing and storage tests
+- Tree operations tests
+- Commit functionality tests
 
 ## Usage
 
@@ -112,11 +139,15 @@ mygit mylog
 
 ```
 mygit/
-    cli.py
-    base.py
-    data.py
-setup.py
-README.md
+    __init__.py     # Package initialization
+    cli.py          # Command-line interface
+    base.py         # Core version control operations
+    data.py         # Data storage and object handling
+test/
+    test_mygit.py   # Test suite
+setup.py           # Package configuration
+.pre-commit-config.yaml  # Pre-commit hook configuration
+README.md         # Project documentation
 ```
 
 ## Requirements
